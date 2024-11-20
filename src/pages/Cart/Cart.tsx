@@ -1,20 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import "./Cart.css";
 import { useEffect } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useStore } from "../../provider/StoreProvider";
-import "./Cart.css";
 
 export default function Cart() {
   const { cartItems, fetchCartItems } = useStore();
 
   useEffect(() => {
     fetchCartItems();
-  }, [fetchCartItems]);
+  }, []);
 
   return (
-    <div>
+    <div className="card__container">
       {cartItems.map((ci) => {
         return (
           <ProductCard
+            key={ci.id}
             id={ci.id}
             imageURL={ci.imageURL}
             price={ci.price}
