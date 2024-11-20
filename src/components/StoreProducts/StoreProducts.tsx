@@ -1,9 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useLoaderData } from "react-router";
 import ProductCard from "../ProductCard/ProductCard";
 import ProductsContainer from "../ProductsContainer/ProductsContainer";
 import "./StoreProducts.css";
 import { ShoeData } from "../../types/ShoeData";
+import { useStore } from "../../provider/StoreProvider";
+import { useEffect } from "react";
 
 const URL = "https://shoes-store-react-backend.vercel.app";
 
@@ -15,12 +16,17 @@ export async function storeLoader() {
 }
 
 export default function StoreProducts() {
-  const data = useLoaderData() as ShoeData[];
+  const { storeItems, getShoes } = useStore();
+
+  useEffect(() => {
+    getShoes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeItems]);
 
   return (
     <div>
       <ProductsContainer>
-        {data.map((s) => {
+        {storeItems.map((s) => {
           return (
             <ProductCard
               key={s.id}
@@ -29,6 +35,8 @@ export default function StoreProducts() {
               brand={s.brand}
               title={s.name}
               price={s.price}
+              slug={s.slug}
+              gender={s.gender}
             />
           );
         })}
