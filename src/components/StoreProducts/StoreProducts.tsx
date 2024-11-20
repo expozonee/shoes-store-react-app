@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useLoaderData } from "react-router";
 import ProductCard from "../ProductCard/ProductCard";
 import ProductsContainer from "../ProductsContainer/ProductsContainer";
@@ -15,7 +16,6 @@ export async function storeLoader() {
 
 export default function StoreProducts() {
   const data = useLoaderData() as ShoeData[];
-  console.log(data);
 
   return (
     <div>
