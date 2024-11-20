@@ -14,6 +14,7 @@ import ProductPage, {
 import StoreProvider from "./provider/StoreProvider.tsx";
 import Cart from "./pages/Cart/Cart.tsx";
 import NewProduct from "./pages/NewProduct/NewProduct.tsx";
+import NotFound from "./pages/NotFound/NotFound.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "store",
     element: <Store />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
