@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import "./ProductsContainer.css";
+import { ReactNode } from "react";
 
 export default function ProductsContainer({
   children,

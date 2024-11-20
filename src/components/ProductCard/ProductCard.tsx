@@ -56,6 +56,7 @@ export default function ProductCard({
           <button className="product-card__button">View Product</button>
         </Link>
         <button
+          className="product-card__button"
           onClick={() => {
             handleCartAdd(cartItems.some((i: ShoeData) => i.id === id));
           }}
