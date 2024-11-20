@@ -6,3 +6,25 @@ header {
   background-color: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
 }
+
+.cart-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #495057;
+  position: relative;
+}
+
+.cart-counter {
+  position: absolute;
+  color: white;
+  background-color: #007bff;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -0.5rem;
+  right: -0.5rem;
+}
