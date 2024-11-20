@@ -29,6 +29,7 @@ type StoreContext = {
   addItemToStore(data: Data): Promise<Response>;
   getShoes(): void;
   fetchCartItems(): void;
+  populateData(): void;
 };
 
 type StoreProviderProps = {
@@ -111,7 +112,7 @@ export default function StoreProvider({ children }: StoreProviderProps) {
   }
 
   async function addItemToStore(data: Data) {
-    const addShoeRes = await fetch(`${URL}/addShoe`, {
+    const addShoeRes = await fetch(`http://localhost:3000/addShoe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -139,6 +140,11 @@ export default function StoreProvider({ children }: StoreProviderProps) {
     setStoreItems(shoesData);
   }
 
+  function populateData() {
+    const cartItems = localStorage.getItem("cart-items");
+    setCartItems(JSON.parse(cartItems!) ?? []);
+  }
+
   return (
     <StoreContext.Provider
       value={{
@@ -152,6 +158,7 @@ export default function StoreProvider({ children }: StoreProviderProps) {
         addItemToStore,
         getShoes,
         fetchCartItems,
+        populateData,
       }}
     >
       {children}
