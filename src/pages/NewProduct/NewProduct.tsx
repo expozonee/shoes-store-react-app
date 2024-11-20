@@ -7,7 +7,6 @@ export default function NewProduct() {
   const navigate = useNavigate();
   const { addItemToStore } = useStore();
   const [formData, setFormData] = useState({
-    id: "",
     name: "",
     price: 0,
     gender: "",
@@ -33,7 +32,9 @@ export default function NewProduct() {
   async function handleSubmit(e: BaseSyntheticEvent) {
     e.preventDefault();
 
-    const status = await addItemToStore(formData);
+    const data = formData;
+
+    const status = await addItemToStore(data);
 
     if (status.ok) {
       navigate(`/store`);
@@ -52,8 +53,8 @@ export default function NewProduct() {
       <input
         onChange={handleChange}
         type="text"
-        name="title"
-        id="title"
+        name="name"
+        id="name"
         value={formData.name}
       />
       <label htmlFor="title">Price</label>
@@ -90,6 +91,14 @@ export default function NewProduct() {
         name="imageURL"
         id="imageURL"
         value={formData.imageURL}
+      />
+      <label htmlFor="title">Slug</label>
+      <input
+        onChange={handleChange}
+        type="text"
+        name="slug"
+        id="slug"
+        value={formData.slug}
       />
       <button type="submit">Submit</button>
     </form>
