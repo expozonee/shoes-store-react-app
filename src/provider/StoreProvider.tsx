@@ -27,6 +27,8 @@ type StoreContext = {
   removeItemFromStore(id: string): Promise<Response>;
   updateItem(data: ShoeData): Promise<Response>;
   addItemToStore(data: Data): Promise<Response>;
+  getShoes(): void;
+  fetchCartItems(): void;
 };
 
 type StoreProviderProps = {
@@ -41,15 +43,25 @@ export default function StoreProvider({ children }: StoreProviderProps) {
 
   function addToCart(item: ShoeData) {
     setCartItems((c) => {
-      return [...c, item];
-    });
+      const cartItemsToAdd = [...c, item];
 
-    localStorage.setItem("cart-items", JSON.stringify(cartItems));
+      localStorage.setItem("cart-items", JSON.stringify(cartItemsToAdd));
+      return cartItemsToAdd;
+    });
   }
 
   function removeItemFromCart(id: string) {
-    setCartItems((c) => c.filter((ci) => ci.id !== id));
-    localStorage.setItem("cart-items", JSON.stringify(cartItems));
+    setCartItems((c) => {
+      const updatedItems = c.filter((ci) => ci.id !== id);
+      localStorage.setItem("cart-items", JSON.stringify(updatedItems));
+      return updatedItems;
+    });
+  }
+
+  function fetchCartItems() {
+    setCartItems(
+      (JSON.parse(localStorage.getItem("cart-items")!) as ShoeData[]) ?? []
+    );
   }
 
   function clearCart() {
@@ -120,6 +132,13 @@ export default function StoreProvider({ children }: StoreProviderProps) {
     return addShoeStatus;
   }
 
+  async function getShoes() {
+    const shoesDataRes = await fetch(`${URL}/shoes`);
+    const shoesData: ShoeData[] = await shoesDataRes.json();
+
+    setStoreItems(shoesData);
+  }
+
   return (
     <StoreContext.Provider
       value={{
@@ -131,6 +150,8 @@ export default function StoreProvider({ children }: StoreProviderProps) {
         removeItemFromStore,
         updateItem,
         addItemToStore,
+        getShoes,
+        fetchCartItems,
       }}
     >
       {children}
