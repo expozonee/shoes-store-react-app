@@ -12,6 +12,8 @@ import ProductPage, {
   productLoader,
 } from "./pages/ProductPage/ProductPage.tsx";
 import StoreProvider from "./provider/StoreProvider.tsx";
+import Cart from "./pages/Cart/Cart.tsx";
+import NewProduct from "./pages/NewProduct/NewProduct.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
         path: "product/:id",
         element: <ProductPage />,
         loader: productLoader,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "add",
+        element: <NewProduct />,
       },
     ],
   },
