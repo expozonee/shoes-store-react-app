@@ -1,5 +1,5 @@
 import "./ProductCard.css";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { useUser } from "../../provider/UserProvider";
 import { useStore } from "../../provider/StoreProvider";
 import { ShoeData } from "../../types/ShoeData";
@@ -12,9 +12,11 @@ type ProductCardProps = {
   price: number;
   slug: string;
   gender: string;
+  cart?: boolean;
 };
 
 export default function ProductCard({
+  cart,
   id,
   imageURL,
   brand,
@@ -23,8 +25,7 @@ export default function ProductCard({
   ...rest
 }: ProductCardProps) {
   const { isAdmin } = useUser();
-  const { removeItemFromStore, addToCart, cartItems, removeItemFromCart } =
-    useStore();
+  const { addToCart, cartItems, removeItemFromCart } = useStore();
 
   function handleCartAdd(isInCart: boolean) {
     if (isInCart) {
@@ -66,15 +67,13 @@ export default function ProductCard({
             : "Add to cart"}
         </button>
       </div>
-      {isAdmin && (
-        <button
-          style={{ backgroundColor: "red" }}
-          onClick={() => {
-            removeItemFromStore(id);
-          }}
-        >
-          Remove
-        </button>
+      {isAdmin && cart && (
+        <Form method="delete">
+          <input type="hidden" name="id" value={id} />
+          <button type="submit" style={{ backgroundColor: "red" }}>
+            Remove
+          </button>
+        </Form>
       )}
     </div>
   );
