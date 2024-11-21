@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router";
-import { useStore } from "../../provider/StoreProvider";
 import "./UpdateItemForm.css";
-import { BaseSyntheticEvent, ChangeEvent, useState } from "react";
+import { Form } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
 
 type UpdateItemForm = {
   id: string;
@@ -22,10 +21,9 @@ export default function UpdateItemForm({
   brand,
   imageURL,
   slug,
-  setUpdate,
 }: UpdateItemForm) {
-  const { updateItem } = useStore();
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     id: id,
     name,
@@ -39,7 +37,7 @@ export default function UpdateItemForm({
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const newData = {
       key: e.target.id,
-      value: e.target.id === "price" ? +e.target.value : e.target.value,
+      value: e.target.value,
     };
 
     setFormData((f) => {
@@ -50,28 +48,23 @@ export default function UpdateItemForm({
     });
   }
 
-  async function handleSubmit(e: BaseSyntheticEvent) {
-    e.preventDefault();
-
-    const status = await updateItem(formData);
-
-    if (status.ok) {
-      setUpdate(false);
-      navigate(`/store/product/${id}`);
-    }
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="update-item__form">
+    <Form
+      method="put"
+      action={`/store/product/${id}`}
+      onSubmit={() => setIsLoading(true)}
+      onTransitionEnd={() => setIsLoading(false)}
+      className="update-item__form"
+    >
       <label htmlFor="title">Title</label>
       <input
         onChange={handleChange}
         type="text"
-        name="title"
-        id="title"
+        name="name"
+        id="name"
         value={formData.name}
       />
-      <label htmlFor="title">Price</label>
+      <label htmlFor="price">Price</label>
       <input
         onChange={handleChange}
         type="text"
@@ -79,7 +72,7 @@ export default function UpdateItemForm({
         id="price"
         value={formData.price.toString()}
       />
-      <label htmlFor="title">Gender</label>
+      <label htmlFor="gender">Gender</label>
       <select
         onChange={handleChange}
         name="gender"
@@ -90,7 +83,7 @@ export default function UpdateItemForm({
         <option value="female">Female</option>
       </select>
 
-      <label htmlFor="title">Brand</label>
+      <label htmlFor="brand">Brand</label>
       <input
         onChange={handleChange}
         type="text"
@@ -98,7 +91,7 @@ export default function UpdateItemForm({
         id="brand"
         value={formData.brand}
       />
-      <label htmlFor="title">Image</label>
+      <label htmlFor="imageURL">Image</label>
       <input
         onChange={handleChange}
         type="text"
@@ -106,7 +99,17 @@ export default function UpdateItemForm({
         id="imageURL"
         value={formData.imageURL}
       />
-      <button type="submit">Submit</button>
-    </form>
+      <label htmlFor="slug">Slug</label>
+      <input
+        onChange={handleChange}
+        type="text"
+        name="slug"
+        id="slug"
+        value={formData.slug}
+      />
+      <button disabled={isLoading} type="submit">
+        {isLoading ? "Updating..." : "Submit"}
+      </button>
+    </Form>
   );
 }

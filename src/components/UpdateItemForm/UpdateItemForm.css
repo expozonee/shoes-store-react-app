@@ -35,3 +35,9 @@ select {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+.update-item__form button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
