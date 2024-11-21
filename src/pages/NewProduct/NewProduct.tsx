@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import { ChangeEvent, useState } from "react";
 import "./NewProduct.css";
-import { Form, Params, redirect } from "react-router-dom";
 import { z } from "zod";
+import { ChangeEvent, useState } from "react";
+import { Form, Params, redirect } from "react-router-dom";
 
 const NewProductData = z.object({
   name: z.string(),
@@ -80,78 +80,79 @@ export default function NewProduct() {
   }
 
   return (
-    <Form
-      style={{
-        margin: "0 auto",
-      }}
-      method="post"
-      action="/store/add"
-      onSubmit={() => setIsLoading(true)}
-      className="update-item__form"
-    >
-      <label htmlFor="title">Title</label>
-      <input
-        onChange={handleChange}
-        type="text"
-        name="name"
-        id="name"
-        required
-        value={formData.name}
-      />
-      <label htmlFor="title">Price</label>
-      <input
-        onChange={handleChange}
-        type="text"
-        name="price"
-        id="price"
-        required
-        value={formData.price.toString()}
-      />
-      <label htmlFor="title">Gender</label>
-      <select
-        onChange={handleChange}
-        name="gender"
-        id="gender"
-        required
-        value={formData.gender}
+    <>
+      <h2>Add new product</h2>
+      <Form
+        style={{}}
+        method="post"
+        action="/store/add"
+        onSubmit={() => setIsLoading(true)}
+        className="update-item__form"
       >
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
+        <label htmlFor="title">Title</label>
+        <input
+          onChange={handleChange}
+          type="text"
+          name="name"
+          id="name"
+          required
+          value={formData.name}
+        />
+        <label htmlFor="title">Price</label>
+        <input
+          onChange={handleChange}
+          type="text"
+          name="price"
+          id="price"
+          required
+          value={formData.price.toString()}
+        />
+        <label htmlFor="title">Gender</label>
+        <select
+          onChange={handleChange}
+          name="gender"
+          id="gender"
+          required
+          value={formData.gender}
+        >
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
 
-      <label htmlFor="title">Brand</label>
-      <input
-        onChange={handleChange}
-        type="text"
-        name="brand"
-        id="brand"
-        required
-        value={formData.brand}
-      />
-      <label htmlFor="title">Image</label>
-      <input
-        onChange={handleChange}
-        type="text"
-        name="imageURL"
-        id="imageURL"
-        required
-        value={formData.imageURL}
-      />
-      <label htmlFor="title">Slug</label>
-      <input
-        onChange={handleChange}
-        type="text"
-        name="slug"
-        id="slug"
-        required
-        value={formData.slug}
-      />
-      <button
-        disabled={Object.values(formData).some((v) => v === "") || isLoading}
-        type="submit"
-      >
-        {isLoading ? "Loading..." : "Submit"}
-      </button>
-    </Form>
+        <label htmlFor="title">Brand</label>
+        <input
+          onChange={handleChange}
+          type="text"
+          name="brand"
+          id="brand"
+          required
+          value={formData.brand}
+        />
+        <label htmlFor="title">Image</label>
+        <input
+          onChange={handleChange}
+          type="text"
+          name="imageURL"
+          id="imageURL"
+          required
+          value={formData.imageURL}
+        />
+        <label htmlFor="title">Slug</label>
+        <input
+          onChange={handleChange}
+          type="text"
+          name="slug"
+          id="slug"
+          required
+          value={formData.slug}
+        />
+        <button
+          disabled={Object.values(formData).some((v) => v === "") || isLoading}
+          type="submit"
+        >
+          {isLoading ? "Loading..." : "Submit"}
+        </button>
+      </Form>
+    </>
   );
 }
