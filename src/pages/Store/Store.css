@@ -18,7 +18,7 @@ header {
 .cart-counter {
   position: absolute;
   color: white;
-  background-color: #007bff;
+  background-color: red;
   border-radius: 50%;
   width: 1.5rem;
   height: 1.5rem;
