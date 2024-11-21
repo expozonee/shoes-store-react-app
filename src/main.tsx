@@ -6,14 +6,18 @@ import HomePage from "./pages/HomePage/HomePage.tsx";
 import UserProvider from "./provider/UserProvider.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import StoreProducts, {
+  removeProductAction,
   storeLoader,
 } from "./components/StoreProducts/StoreProducts.tsx";
 import ProductPage, {
   productLoader,
+  updateProductAction,
 } from "./pages/ProductPage/ProductPage.tsx";
 import StoreProvider from "./provider/StoreProvider.tsx";
 import Cart from "./pages/Cart/Cart.tsx";
-import NewProduct from "./pages/NewProduct/NewProduct.tsx";
+import NewProduct, {
+  action as addNewAction,
+} from "./pages/NewProduct/NewProduct.tsx";
 import NotFound from "./pages/NotFound/NotFound.tsx";
 
 const router = createBrowserRouter([
@@ -30,11 +34,13 @@ const router = createBrowserRouter([
         index: true,
         element: <StoreProducts />,
         loader: storeLoader,
+        action: removeProductAction,
       },
       {
         path: "product/:id",
         element: <ProductPage />,
         loader: productLoader,
+        action: updateProductAction,
       },
       {
         path: "cart",
@@ -43,6 +49,7 @@ const router = createBrowserRouter([
       {
         path: "add",
         element: <NewProduct />,
+        action: addNewAction,
       },
     ],
   },
