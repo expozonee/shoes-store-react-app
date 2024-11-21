@@ -70,7 +70,11 @@ export default function ProductCard({
       {isAdmin && cart && (
         <Form method="delete">
           <input type="hidden" name="id" value={id} />
-          <button type="submit" style={{ backgroundColor: "red" }}>
+          <button
+            className="product-card__button"
+            type="submit"
+            style={{ backgroundColor: "red" }}
+          >
             Remove
           </button>
         </Form>

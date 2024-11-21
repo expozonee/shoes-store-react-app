@@ -65,7 +65,7 @@
 .product-card__button {
   background: rgb(0, 0, 0);
   border: none;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 10px 20px;
   color: #ffffff;
   cursor: pointer;
