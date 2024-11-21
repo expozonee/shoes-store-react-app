@@ -3,8 +3,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import ProductsContainer from "../ProductsContainer/ProductsContainer";
 import "./StoreProducts.css";
 import { ShoeData } from "../../types/ShoeData";
-import { useStore } from "../../provider/StoreProvider";
-import { useEffect } from "react";
+import { redirect, useLoaderData } from "react-router";
 
 const URL = "https://shoes-store-react-backend.vercel.app";
 
@@ -15,18 +14,38 @@ export async function storeLoader() {
   return shoesData;
 }
 
-export default function StoreProducts() {
-  const { storeItems, getShoes } = useStore();
+export async function removeProductAction({ request }: { request: Request }) {
+  const formData = await request.formData();
+  const id = formData.get("id");
 
-  useEffect(() => {
-    getShoes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storeItems]);
+  const deleteStatusRes = await fetch(`${URL}/delete/${id}`, {
+    method: "DELETE",
+  });
+
+  const deleteStatus: Response = await deleteStatusRes.json();
+
+  if (deleteStatus.ok) {
+    const cartItems = localStorage.getItem("cart-items");
+
+    if (cartItems) {
+      const cartItemsData = JSON.parse(cartItems) as ShoeData[];
+      const dataToAdd = cartItemsData.filter((ci) => ci.id !== id);
+      localStorage.setItem("cart-items", JSON.stringify(dataToAdd));
+    }
+
+    return redirect("/store");
+  }
+
+  return deleteStatus;
+}
+
+export default function StoreProducts() {
+  const data = useLoaderData() as ShoeData[];
 
   return (
     <div>
       <ProductsContainer>
-        {storeItems.map((s) => {
+        {data.map((s) => {
           return (
             <ProductCard
               key={s.id}
@@ -37,6 +56,7 @@ export default function StoreProducts() {
               price={s.price}
               slug={s.slug}
               gender={s.gender}
+              cart
             />
           );
         })}
