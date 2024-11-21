@@ -1,14 +1,64 @@
-import { BaseSyntheticEvent, ChangeEvent, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { ChangeEvent, useState } from "react";
 import "./NewProduct.css";
-import { useNavigate } from "react-router-dom";
-import { useStore } from "../../provider/StoreProvider";
+import { Form, Params, redirect } from "react-router-dom";
+import { z } from "zod";
+
+const NewProductData = z.object({
+  name: z.string(),
+  price: z.number().positive(),
+  gender: z.string(),
+  brand: z.string(),
+  imageURL: z.string(),
+  slug: z.string(),
+});
+
+const URL = "https://shoes-store-react-backend.vercel.app";
+
+export async function action({
+  request,
+}: {
+  params?: Params;
+  request: Request;
+}) {
+  const formData = await request.formData();
+
+  const dataToAdd = {
+    name: formData.get("name"),
+    price: Number.parseFloat(formData.get("price") as string),
+    gender: formData.get("gender"),
+    brand: formData.get("brand"),
+    imageURL: formData.get("imageURL"),
+    slug: formData.get("slug"),
+  };
+
+  const allDataValid = NewProductData.safeParse(dataToAdd);
+  console.log(allDataValid);
+
+  if (!allDataValid.success) return null;
+
+  const addShoeRes = await fetch(`${URL}/addShoe`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToAdd),
+  });
+
+  const addShoeStatus = await addShoeRes.json();
+
+  if (addShoeStatus.ok) {
+    return redirect("/store");
+  }
+
+  return addShoeStatus;
+}
 
 export default function NewProduct() {
-  const navigate = useNavigate();
-  const { addItemToStore } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    price: 0,
+    price: "",
     gender: "",
     brand: "",
     imageURL: "",
@@ -18,7 +68,7 @@ export default function NewProduct() {
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const newData = {
       key: e.target.id,
-      value: e.target.id === "price" ? +e.target.value : e.target.value,
+      value: e.target.value,
     };
 
     setFormData((f) => {
@@ -29,24 +79,14 @@ export default function NewProduct() {
     });
   }
 
-  async function handleSubmit(e: BaseSyntheticEvent) {
-    e.preventDefault();
-
-    const data = formData;
-
-    const status = await addItemToStore(data);
-
-    if (status.ok) {
-      navigate(`/store`);
-    }
-  }
-
   return (
-    <form
+    <Form
       style={{
         margin: "0 auto",
       }}
-      onSubmit={handleSubmit}
+      method="post"
+      action="/store/add"
+      onSubmit={() => setIsLoading(true)}
       className="update-item__form"
     >
       <label htmlFor="title">Title</label>
@@ -55,6 +95,7 @@ export default function NewProduct() {
         type="text"
         name="name"
         id="name"
+        required
         value={formData.name}
       />
       <label htmlFor="title">Price</label>
@@ -63,6 +104,7 @@ export default function NewProduct() {
         type="text"
         name="price"
         id="price"
+        required
         value={formData.price.toString()}
       />
       <label htmlFor="title">Gender</label>
@@ -70,6 +112,7 @@ export default function NewProduct() {
         onChange={handleChange}
         name="gender"
         id="gender"
+        required
         value={formData.gender}
       >
         <option value="male">Male</option>
@@ -82,6 +125,7 @@ export default function NewProduct() {
         type="text"
         name="brand"
         id="brand"
+        required
         value={formData.brand}
       />
       <label htmlFor="title">Image</label>
@@ -90,6 +134,7 @@ export default function NewProduct() {
         type="text"
         name="imageURL"
         id="imageURL"
+        required
         value={formData.imageURL}
       />
       <label htmlFor="title">Slug</label>
@@ -98,9 +143,15 @@ export default function NewProduct() {
         type="text"
         name="slug"
         id="slug"
+        required
         value={formData.slug}
       />
-      <button type="submit">Submit</button>
-    </form>
+      <button
+        disabled={Object.values(formData).some((v) => v === "") || isLoading}
+        type="submit"
+      >
+        {isLoading ? "Loading..." : "Submit"}
+      </button>
+    </Form>
   );
 }
