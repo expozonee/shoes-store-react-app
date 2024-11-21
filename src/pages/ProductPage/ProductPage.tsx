@@ -19,6 +19,40 @@ export async function productLoader({ params }: { params: Params }) {
   return shoe;
 }
 
+export async function updateProductAction({
+  params,
+  request,
+}: {
+  params: Params;
+  request: Request;
+}) {
+  const { id } = params;
+  const formData = await request.formData();
+  const data = {
+    name: formData.get("name"),
+    price: +formData.get("price")!,
+    gender: formData.get("gender"),
+    brand: formData.get("brand"),
+    imageURL: formData.get("imageURL"),
+    slug: formData.get("slug"),
+  };
+
+  const updateRes = await fetch(`${URL}/shoe/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const updataStatus: Response = await updateRes.json();
+
+  if (!updataStatus.ok) {
+    return updataStatus;
+  }
+
+  return updataStatus;
+}
+
 export default function ProductPage() {
   const [isUpdate, setIsUpdate] = useState(false);
   const { isAdmin } = useUser();
@@ -77,7 +111,6 @@ export default function ProductPage() {
             brand={shoeData.brand}
             imageURL={shoeData.imageURL}
             slug={shoeData.slug}
-            setUpdate={setIsUpdate}
           />
         </div>
       )}

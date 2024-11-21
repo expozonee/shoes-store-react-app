@@ -10,7 +10,6 @@ type UpdateItemForm = {
   brand: string;
   imageURL: string;
   slug: string;
-  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function UpdateItemForm({
