@@ -18,7 +18,7 @@ export default function Store() {
     <>
       <header className="store__header">
         <Link to={"/"}>
-          <h3 style={{ color: "white" }}>logo</h3>
+          <h3 className="logo">Shoes Store</h3>
         </Link>
         <div style={{ display: "flex", gap: "1rem" }}>
           <Link to={"/store"}>
