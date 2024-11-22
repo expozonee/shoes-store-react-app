@@ -7,7 +7,7 @@ import { Form, Params, redirect } from "react-router-dom";
 const NewProductData = z.object({
   name: z.string(),
   price: z.number().positive(),
-  gender: z.string(),
+  gender: z.enum(["male", "female"]),
   brand: z.string(),
   imageURL: z.string(),
   slug: z.string(),
@@ -114,6 +114,9 @@ export default function NewProduct() {
           required
           value={formData.gender}
         >
+          <option disabled selected value="">
+            -- Choose gender --
+          </option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
