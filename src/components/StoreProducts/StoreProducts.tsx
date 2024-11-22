@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import ProductCard from "../ProductCard/ProductCard";
-import ProductsContainer from "../ProductsContainer/ProductsContainer";
 import "./StoreProducts.css";
 import { ShoeData } from "../../types/ShoeData";
+import ProductCard from "../ProductCard/ProductCard";
 import { redirect, useLoaderData } from "react-router";
+import ProductsContainer from "../ProductsContainer/ProductsContainer";
 
-const URL = "https://shoes-store-react-backend.vercel.app";
+const URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function storeLoader() {
   const shoesDataRes = await fetch(`${URL}/shoes`);

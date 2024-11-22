@@ -13,7 +13,7 @@ const NewProductData = z.object({
   slug: z.string(),
 });
 
-const URL = "https://shoes-store-react-backend.vercel.app";
+const URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function action({
   request,
@@ -33,7 +33,6 @@ export async function action({
   };
 
   const allDataValid = NewProductData.safeParse(dataToAdd);
-  console.log(allDataValid);
 
   if (!allDataValid.success) return null;
 
@@ -87,7 +86,7 @@ export default function NewProduct() {
         method="post"
         action="/store/add"
         onSubmit={() => setIsLoading(true)}
-        className="update-item__form"
+        className="add-item__form"
       >
         <label htmlFor="title">Title</label>
         <input

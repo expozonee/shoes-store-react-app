@@ -1,13 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import "./ProductPage.css";
+import { useState } from "react";
 import { ShoeData } from "../../types/ShoeData";
 import { Params, useLoaderData } from "react-router";
 import { useUser } from "../../provider/UserProvider";
-import UpdateItemForm from "../../components/UpdateItemForm/UpdateItemForm";
-import { useState } from "react";
 import { useStore } from "../../provider/StoreProvider";
+import UpdateItemForm from "../../components/UpdateItemForm/UpdateItemForm";
 
-const URL = "https://shoes-store-react-backend.vercel.app";
+const URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function productLoader({ params }: { params: Params }) {
   const { id } = params;
