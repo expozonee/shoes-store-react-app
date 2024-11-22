@@ -7,7 +7,7 @@ import { useUser } from "../../provider/UserProvider";
 import { useStore } from "../../provider/StoreProvider";
 import UpdateItemForm from "../../components/UpdateItemForm/UpdateItemForm";
 
-const URL = import.meta.env.VITE_BACKEND_URL;
+const URL = "https://shoes-store-react-backend.vercel.app";
 
 export async function productLoader({ params }: { params: Params }) {
   const { id } = params;
