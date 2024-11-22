@@ -5,7 +5,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import { redirect, useLoaderData } from "react-router";
 import ProductsContainer from "../ProductsContainer/ProductsContainer";
 
-const URL = import.meta.env.VITE_BACKEND_URL;
+const URL = "https://shoes-store-react-backend.vercel.app";
 
 export async function storeLoader() {
   const shoesDataRes = await fetch(`${URL}/shoes`);

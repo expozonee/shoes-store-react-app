@@ -13,7 +13,7 @@ const NewProductData = z.object({
   slug: z.string(),
 });
 
-const URL = import.meta.env.VITE_BACKEND_URL;
+const URL = "https://shoes-store-react-backend.vercel.app";
 
 export async function action({
   request,
