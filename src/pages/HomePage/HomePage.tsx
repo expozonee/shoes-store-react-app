@@ -16,7 +16,10 @@ export default function HomePage() {
           />
         </div>
         <h1>Welcome to Shoes store</h1>
-        <Link to={"/store"}>
+        <Link
+          to={"/store"}
+          style={{ marginBottom: `${isSignedIn ? "3rem" : ""}` }}
+        >
           <button> Start Shopping!</button>
         </Link>
 
