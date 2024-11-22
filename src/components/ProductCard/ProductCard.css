@@ -10,13 +10,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 1.5rem;
 }
 
 .product__details {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  gap: 10px;
   justify-items: center;
 }
 
@@ -56,10 +57,15 @@
   margin-bottom: 5px;
 }
 
+.product-card__price {
+  font-weight: bold;
+  color: green;
+}
+
 .product-card__button {
   background: rgb(0, 0, 0);
   border: none;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 10px 20px;
   color: #ffffff;
   cursor: pointer;
@@ -67,4 +73,12 @@
 
 .product-card__button:hover {
   background: rgba(0, 0, 0, 0.4);
+}
+
+.product-card a {
+  width: 100%;
+}
+
+.product-card button {
+  width: 100%;
 }

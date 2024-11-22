@@ -5,4 +5,21 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+  padding-top: 0;
+  width: 80%;
+}
+
+.sign-in-form label {
+  font-size: 1.2rem;
+  color: #242424;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+}
+
+.sign-in-form input {
+  padding: 10px;
+  border: 1px solid #242424;
+  border-radius: 5px;
+  width: 100%;
 }

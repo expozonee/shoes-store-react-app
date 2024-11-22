@@ -1,17 +1,24 @@
+import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-// import App from "./App.tsx";
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage.tsx";
 import Store from "./pages/Store/Store.tsx";
+import HomePage from "./pages/HomePage/HomePage.tsx";
+import UserProvider from "./provider/UserProvider.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import StoreProducts, {
+  removeProductAction,
   storeLoader,
 } from "./components/StoreProducts/StoreProducts.tsx";
 import ProductPage, {
   productLoader,
+  updateProductAction,
 } from "./pages/ProductPage/ProductPage.tsx";
+import StoreProvider from "./provider/StoreProvider.tsx";
+import Cart from "./pages/Cart/Cart.tsx";
+import NewProduct, {
+  action as addNewAction,
+} from "./pages/NewProduct/NewProduct.tsx";
+import NotFound from "./pages/NotFound/NotFound.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,16 +28,28 @@ const router = createBrowserRouter([
   {
     path: "store",
     element: <Store />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
         element: <StoreProducts />,
         loader: storeLoader,
+        action: removeProductAction,
       },
       {
         path: "product/:id",
         element: <ProductPage />,
         loader: productLoader,
+        action: updateProductAction,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "add",
+        element: <NewProduct />,
+        action: addNewAction,
       },
     ],
   },
@@ -38,7 +57,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={router} />
+    <UserProvider>
+      <StoreProvider>
+        <RouterProvider router={router} />
+      </StoreProvider>
+    </UserProvider>
   </StrictMode>
 );
