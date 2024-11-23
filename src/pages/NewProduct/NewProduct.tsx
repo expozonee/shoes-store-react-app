@@ -87,6 +87,8 @@ export default function NewProduct() {
     }
   }, [isAdmin, navigate]);
 
+  if (!isAdmin) return null;
+
   return (
     <>
       <h2>Add new product</h2>
