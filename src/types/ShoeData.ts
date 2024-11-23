@@ -6,4 +6,5 @@ export type ShoeData = {
   price: number;
   imageURL: string;
   slug: string;
+  error?: string;
 };
