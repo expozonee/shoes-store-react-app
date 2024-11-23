@@ -1,8 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import "./NewProduct.css";
 import { z } from "zod";
-import { ChangeEvent, useState } from "react";
-import { Form, Params, redirect } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Form, Params, redirect, useNavigate } from "react-router-dom";
+import { useUser } from "../../provider/UserProvider";
 
 const NewProductData = z.object({
   name: z.string(),
@@ -54,6 +55,8 @@ export async function action({
 }
 
 export default function NewProduct() {
+  const { isAdmin } = useUser();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -77,6 +80,14 @@ export default function NewProduct() {
       };
     });
   }
+
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate("/store");
+    }
+  }, [isAdmin, navigate]);
+
+  if (!isAdmin) return null;
 
   return (
     <>
@@ -114,7 +125,7 @@ export default function NewProduct() {
           required
           value={formData.gender}
         >
-          <option disabled selected value="">
+          <option disabled value="">
             -- Choose gender --
           </option>
           <option value="male">Male</option>

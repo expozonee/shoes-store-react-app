@@ -46,10 +46,6 @@ export async function updateProductAction({
   });
   const updataStatus: Response = await updateRes.json();
 
-  if (!updataStatus.ok) {
-    return updataStatus;
-  }
-
   return updataStatus;
 }
 
@@ -58,6 +54,8 @@ export default function ProductPage() {
   const { isAdmin } = useUser();
   const { addToCart, cartItems, removeItemFromCart } = useStore();
   const shoeData = useLoaderData() as ShoeData;
+
+  if (shoeData.error) throw new Error("Product with that id does not exist.");
 
   function handleCartAdd(isInCart: boolean) {
     if (isInCart) {
