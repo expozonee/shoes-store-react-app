@@ -1,15 +1,11 @@
-import { Link, useRouteError } from "react-router-dom";
 import "./NotFound.css";
+import { Link } from "react-router-dom";
 
 export default function NotFound() {
-  const error = useRouteError();
-  console.log(error);
-
   return (
     <div className="not-found">
       <h1>404 - Page Not Found</h1>
       <p>Sorry, the page you are looking for does not exist.</p>
-      <p>Error: {`${error}`}</p>
       <Link to={"/"}>
         <button>Go back to the homepage</button>
       </Link>
