@@ -22,13 +22,12 @@ A custom backend server was built using **Node.js**, **Express.js**, and **Postg
 ### Routes
 
 - **Home Page**: `/`
-- **Shoes Page**: `/shoes`  
-  Displays a list of all shoes with pictures, names, and prices.
-- **Shoe Detail Page**: `/shoes/:shoeId`  
-  Shows editable fields for updating a shoe, with "Update" and "Delete" buttons.
-- **Add Shoe Page**: `/shoes/add`  
+- **Shoes Page**: `/store`  
+  Displays a list of all shoes with pictures, names, and prices with "Delete" button (for admin only).
+- **Shoe Detail Page**: `/store/product/:shoeId`  
+  with "Update" button that shows editable fields for updating a shoe (for admin only).
+- **Add Shoe Page**: `/store/add`  
   Allows the admin to add a new shoe to the store.
-- **Additional Routes**: You may add any other routes as desired.
 
 ### User Roles
 
