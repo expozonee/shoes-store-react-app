@@ -25,6 +25,14 @@
   padding-bottom: 1rem;
 }
 
+.welcome__container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
 .welcome__container button {
   width: 100%;
 
@@ -43,8 +51,10 @@
 
 .welcome__container h1 {
   color: #242424;
-  font-size: 2rem;
   margin: 1rem 0;
+  padding-inline: 1rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  text-align: center;
 }
 
 .welcome__container a {
