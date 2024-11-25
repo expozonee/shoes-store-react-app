@@ -2,7 +2,8 @@
 import { ShoeData } from "../types/ShoeData";
 import { createContext, ReactNode, useContext, useState } from "react";
 
-const URL = "https://shoes-store-react-backend.vercel.app";
+// const URL = process.env.BACKEND_URL;
+const URL = process.env.BACKEND_URL;
 
 type Response = {
   ok: boolean;
