@@ -14,7 +14,7 @@ const NewProductData = z.object({
   slug: z.string(),
 });
 
-const URL = "https://shoes-store-react-backend.vercel.app";
+const URL = process.env.BACKEND_URL;
 
 export async function action({
   request,
