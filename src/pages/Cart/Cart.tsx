@@ -13,20 +13,26 @@ export default function Cart() {
 
   return (
     <div className="card__container">
-      {cartItems.map((ci) => {
-        return (
-          <ProductCard
-            key={ci.id}
-            id={ci.id}
-            imageURL={ci.imageURL}
-            price={ci.price}
-            gender={ci.gender}
-            title={ci.name}
-            brand={ci.brand}
-            slug={ci.slug}
-          />
-        );
-      })}
+      {cartItems.length > 0 ? (
+        cartItems.map((ci) => {
+          return (
+            <ProductCard
+              key={ci.id}
+              id={ci.id}
+              imageURL={ci.imageURL}
+              price={ci.price}
+              gender={ci.gender}
+              title={ci.name}
+              brand={ci.brand}
+              slug={ci.slug}
+            />
+          );
+        })
+      ) : (
+        <p className="cart-empty">
+          Cart is empty, add items to cart to show up here
+        </p>
+      )}
     </div>
   );
 }

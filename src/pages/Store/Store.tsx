@@ -20,7 +20,10 @@ export default function Store() {
         <Link to={"/"}>
           <h3 className="logo">Shoes Store</h3>
         </Link>
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div
+          className="store-nav_buttons"
+          style={{ display: "flex", gap: "1rem" }}
+        >
           <Link to={"/store"}>
             <button>Store</button>
           </Link>
