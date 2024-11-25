@@ -78,6 +78,7 @@ export default function ProductPage() {
   return (
     <div className="product-page">
       <div className="title-image__container">
+        <p className="brand">{shoeData.brand}</p>
         <h2>{shoeData.name}</h2>
         <img src={shoeData.imageURL} alt={shoeData.name} />
       </div>

@@ -20,10 +20,16 @@
 }
 
 .product-page h2 {
+  margin: 0;
   font-size: 1.5em;
-  margin-top: 1.5rem;
   margin-bottom: 10px;
   color: #333;
+}
+
+.product-page .brand {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .product-page img {
